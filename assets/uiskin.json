@@ -1,0 +1,53 @@
+{
+"com.badlogic.gdx.graphics.g2d.BitmapFont": {
+	"font": {
+		"file": "MinecraftTen-VGORe.fnt",
+		"scaledSize": -1,
+		"markupEnabled": false,
+		"flip": false
+	}
+},
+"com.badlogic.gdx.graphics.Color": {
+	"disabled": {
+		"r": 0.94509804,
+		"g": 0.94509804,
+		"b": 0.94509804,
+		"a": 0.49803922
+	},
+	"offWhite": {
+		"r": 0.8784314,
+		"g": 0.8784314,
+		"b": 0.8784314,
+		"a": 1
+	},
+	"white": {
+		"r": 1,
+		"g": 1,
+		"b": 1,
+		"a": 1
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
+	"default": {
+		"font": "font",
+		"fontColor": "offWhite",
+		"disabledFontColor": "disabled",
+		"up": "button-up",
+		"down": "button-down",
+		"over": "button-over",
+		"focused": "button-focused",
+		"disabled": "button-disabled",
+		"checked": "button-checked",
+		"checkedOver": "button-checkedOver",
+		"pressedOffsetY": -2,
+		"checkedOffsetY": -2
+	}
+},
+
+  "com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
+    "default": {
+      "font": "font",
+      "fontColor": "white"
+    }
+  }
+}

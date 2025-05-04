@@ -1,0 +1,69 @@
+
+uiskin.png
+size: 512, 512
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+MinecraftTen-VGORe
+  rotate: false
+  xy: 1, 474
+  size: 505, 30
+  orig: 505, 30
+  offset: 0, 0
+  index: -1
+button-checked
+  rotate: false
+  xy: 1, 429
+  size: 111, 43
+  split: 11, 13, 13, 13
+  orig: 111, 43
+  offset: 0, 0
+  index: -1
+button-checkedOver
+  rotate: false
+  xy: 1, 384
+  size: 111, 43
+  split: 11, 13, 13, 13
+  orig: 111, 43
+  offset: 0, 0
+  index: -1
+button-disabled
+  rotate: false
+  xy: 114, 429
+  size: 111, 43
+  split: 11, 13, 13, 13
+  orig: 111, 43
+  offset: 0, 0
+  index: -1
+button-down
+  rotate: false
+  xy: 1, 339
+  size: 111, 43
+  split: 11, 13, 13, 13
+  orig: 111, 43
+  offset: 0, 0
+  index: -1
+button-focused
+  rotate: false
+  xy: 114, 384
+  size: 111, 43
+  split: 11, 13, 13, 13
+  orig: 111, 43
+  offset: 0, 0
+  index: -1
+button-over
+  rotate: false
+  xy: 227, 429
+  size: 111, 43
+  split: 11, 13, 13, 13
+  orig: 111, 43
+  offset: 0, 0
+  index: -1
+button-up
+  rotate: false
+  xy: 1, 294
+  size: 111, 43
+  split: 11, 13, 13, 13
+  orig: 111, 43
+  offset: 0, 0
+  index: -1
