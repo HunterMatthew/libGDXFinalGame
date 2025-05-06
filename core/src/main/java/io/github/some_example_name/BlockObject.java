@@ -33,7 +33,7 @@ public class BlockObject {
             case 0:     // stone
                 this.setTier(0);
 
-                this.maxHealth = 3;    // 3 clicks
+                this.maxHealth = 5;    // 3 clicks
                 this.health = maxHealth;
 
                 this.blockDir = "Minecraft-Stone-Block.jpg";
@@ -43,7 +43,7 @@ public class BlockObject {
             case 1:     // iron
                 this.setTier(1);
 
-                this.maxHealth = 5;    // 5 clicks
+                this.maxHealth = 10;    // 5 clicks
                 this.health = maxHealth;
 
                 this.blockDir = "iron ore block.png";

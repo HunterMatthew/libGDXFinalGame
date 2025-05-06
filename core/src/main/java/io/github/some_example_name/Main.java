@@ -14,7 +14,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import sun.jvm.hotspot.opto.Block;
 
 import java.util.ArrayList;
 
@@ -33,6 +32,8 @@ public class Main implements ApplicationListener {
     private BlockObject stone;
     private BlockObject iron;
 
+    private Pickaxe pickaxe;
+
     private ArrayList<BlockObject> blockList;
 
 
@@ -46,7 +47,9 @@ public class Main implements ApplicationListener {
         viewport = new FitViewport(1280, 720);
         spriteBatch = new SpriteBatch();
 
-        gameUI = new GameUI(viewport, spriteBatch);
+        pickaxe = new Pickaxe();
+
+        gameUI = new GameUI(viewport, spriteBatch, pickaxe);
 
         backgroundDir = "minecraftDirtBackground.jpg";
         //backgroundTexture = new Texture(backgroundDir);
@@ -57,6 +60,7 @@ public class Main implements ApplicationListener {
 
         stone = new BlockObject();      // empty for tier 0 "stone"
         iron = new BlockObject(1);      // 1 for tier iron
+
 
         blockList.add(stone);
         blockList.add(iron);
@@ -97,9 +101,8 @@ public class Main implements ApplicationListener {
             for (BlockObject b : blockList)     // loops through every time
             {
                 b.getBlockSprite().draw(spriteBatch);   // draws sprite
-                clickDetector(viewport, b, gameUI);     // detects click on every block onscreen
+                clickDetector(viewport, b, gameUI, pickaxe);     // detects click on every block onscreen
             }
-
 
 
 
@@ -128,51 +131,60 @@ public class Main implements ApplicationListener {
         // Destroy application's resources here.
     }
 
-    public void clickDetector(Viewport viewport, BlockObject b, GameUI gameUI)
+    public void clickDetector(Viewport viewport, BlockObject b, GameUI gameUI, Pickaxe p)
     {
-        Vector2 touchPos = new Vector2(Gdx.input.getX(), Gdx.input.getY());     // Vector2 holds x and y
-        viewport.unproject(touchPos);    // unproject converts screen pos to world pos (400px x320px -> 2f x1.7f ex)
 
-        Rectangle blockBounding = b.getBlockSprite().getBoundingRectangle();    // bounds of sprite
+        try {
+            Vector2 touchPos = new Vector2(Gdx.input.getX(), Gdx.input.getY());     // Vector2 holds x and y
+            viewport.unproject(touchPos);    // unproject converts screen pos to world pos (400px x320px -> 2f x1.7f ex)
 
-        if (Gdx.input.justTouched())        // if clicked anywhere
-        {
-            if (blockBounding.contains(touchPos))       // if clicked in bounds of any block
+            Rectangle blockBounding = b.getBlockSprite().getBoundingRectangle();    // bounds of sprite
+
+            if (Gdx.input.justTouched())        // if clicked anywhere
             {
-                b.setHealth(b.getHealth() - 1);     // -1 health
 
-                if (b.getHealth() <= 0)     // if out of health
+
+                //System.out.println("pickaxe.getDmg() = " + p.getDmg());   debug
+
+
+                if (blockBounding.contains(touchPos))       // if clicked in bounds of any block
                 {
+                    b.setHealth(b.getHealth() - p.getDmg());     // -1 health
 
-                    switch (b.getTier())    // make own method?
+                    if (b.getHealth() <= 0)     // if out of health
                     {
-                        case 0:
-                            gameUI.setStoneCount(gameUI.getStoneCount() + 1);
-                            break;
 
-                        case 1:
-                            gameUI.setIronCount(gameUI.getIronCount() + 1);
-                            break;
+                        switch (b.getTier())    // make own method?
+                        {
+                            case 0:
+                                gameUI.setStoneCount(gameUI.getStoneCount() + 1);
+                                break;
+
+                            case 1:
+                                gameUI.setIronCount(gameUI.getIronCount() + 1);
+                                break;
+                        }
+
+                        gameUI.updateLabels(pickaxe);
+
+                        b.resetHealth(b);       // resets health
+
+                        b.randomPos(viewport, b);       // random pos
                     }
-
-                    gameUI.updateLabels();
-
-                    b.resetHealth(b);       // resets health
-
-                    b.randomPos(viewport, b);       // random pos
+                } else {
+                    // !! EDIT THIS !!
                 }
             }
 
-            else
-            {
-                // !! EDIT THIS !!
-            }
-        }
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
-
-
+    public Pickaxe getPickaxe() {
+        return pickaxe;
+    }
 
 }
