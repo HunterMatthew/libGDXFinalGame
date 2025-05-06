@@ -22,11 +22,17 @@ public class GameUI
 
     private Label cobblestoneLabel;
     private Label ironLabel;
+    private Label goldLabel;
+    private Label diamondLabel;
+    private Label obsidianLabel;
 
     private Label pickTierLabel;
 
     private int stoneCount;
     private int ironCount;
+    private int goldCount;
+    private int diamondCount;
+    private int obsidianCount;
 
 
 
@@ -72,13 +78,22 @@ public class GameUI
 
         cobblestoneLabel = new Label("Cobblestone : " + getStoneCount(), skin);    // text label,
         ironLabel = new Label("Iron : " + getIronCount(), skin);                   // takes in string and skin
+        goldLabel = new Label("Gold: " + getGoldCount(), skin);
+        diamondLabel = new Label("Diamond: " + getDiamondCount(), skin);
+        obsidianLabel = new Label("Obsidian: " + getObsidianCount(), skin);
+
         pickTierLabel = new Label("Pickaxe Tier : " + pickaxe.getTierString(pickaxe.getTierInt()), skin);
 
 
 
         table.add(menuButton).pad(10);      // menu first
+
         table.add(cobblestoneLabel).pad(10);    // add them by the tiers
         table.add(ironLabel).pad(10);
+        table.add(goldLabel).pad(10);
+        table.add(diamondLabel).pad(10);
+        table.add(obsidianLabel).pad(10);
+
         table.add(pickTierLabel).expandX().right().pad(10);
 
 
@@ -126,6 +141,22 @@ public class GameUI
                         ironCount = pickUpgrader(pickaxe, ironCount, 3);
                         updateLabels(pickaxe);
                         break;
+
+                    case 3:     // gold
+                        goldCount = pickUpgrader(pickaxe, goldCount, 3);
+                        updateLabels(pickaxe);
+                        break;
+
+                    case 4:     // diamond
+                        diamondCount = pickUpgrader(pickaxe, diamondCount, 3);
+                        updateLabels(pickaxe);
+                        break;
+
+                    case 5:     // obsidian
+                        obsidianCount = pickUpgrader(pickaxe, obsidianCount, 3);
+                        updateLabels(pickaxe);
+                        break;
+
                     default:
                         // add more to this
                         updateLabels(pickaxe);
@@ -163,6 +194,9 @@ public class GameUI
     {
         cobblestoneLabel.setText("Cobblestone : " + getStoneCount());
         ironLabel.setText("Iron : " + getIronCount());
+        goldLabel.setText("Gold : " + getGoldCount());
+        diamondLabel.setText("Diamond : " + getDiamondCount());
+        obsidianLabel.setText("Obsidian : " + getObsidianCount());
 
         pickTierLabel.setText("PICKAXE TIER : " + pickaxe.getTierString(pickaxe.getTierInt()));
     }
@@ -198,6 +232,30 @@ public class GameUI
 
     public void setIronCount(int ironCount) {
         this.ironCount = ironCount;
+    }
+
+    public int getGoldCount() {
+        return goldCount;
+    }
+
+    public void setGoldCount(int goldCount) {
+        this.goldCount = goldCount;
+    }
+
+    public int getDiamondCount() {
+        return diamondCount;
+    }
+
+    public void setDiamondCount(int diamondCount) {
+        this.diamondCount = diamondCount;
+    }
+
+    public int getObsidianCount() {
+        return obsidianCount;
+    }
+
+    public void setObsidianCount(int obsidianCount) {
+        this.obsidianCount = obsidianCount;
     }
 
     public Stage getStage() {       // no set, feel like it would make it complicated

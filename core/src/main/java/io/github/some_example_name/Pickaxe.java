@@ -32,6 +32,18 @@ public class Pickaxe {
                 setTier(2);
                 setDmg(5);
                 break;
+            case 3:
+                setTier(3);
+                setDmg(7);
+                break;
+            case 4:
+                setTier(4);
+                setDmg(10);
+                break;
+            case 5:
+                setTier(5);
+                setDmg(20);
+                break;
         }
     }
 
@@ -60,6 +72,15 @@ public class Pickaxe {
                 break;
             case 2:     // iron
                 tierString = "iron";
+                break;
+            case 3:
+                tierString = "gold";
+                break;
+            case 4:
+                tierString = "diamond";
+                break;
+            case 5:
+                tierString = "obsidian";
                 break;
 
             default:

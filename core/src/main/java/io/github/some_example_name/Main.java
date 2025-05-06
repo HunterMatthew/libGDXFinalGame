@@ -31,6 +31,9 @@ public class Main implements ApplicationListener {
 
     private BlockObject stone;
     private BlockObject iron;
+    private BlockObject gold;
+    private BlockObject diamond;
+    private BlockObject obsidian;
 
     private Pickaxe pickaxe;
 
@@ -60,19 +63,28 @@ public class Main implements ApplicationListener {
 
         stone = new BlockObject();      // empty for tier 0 "stone"
         iron = new BlockObject(1);      // 1 for tier iron
+        gold = new BlockObject(2);
+        diamond = new BlockObject(3);
+        obsidian = new BlockObject(4);
 
 
         blockList.add(stone);
         blockList.add(iron);
+        blockList.add(gold);
+        blockList.add(diamond);
+        blockList.add(obsidian);
+
 
         for (BlockObject b : blockList)
         {
             System.out.println(b.toString());
         }
 
-        stone.randomPos(viewport, this.stone);
-        iron.randomPos(viewport, this.iron);
-
+        stone.randomPos(viewport, blockList);
+        iron.randomPos(viewport, blockList);
+        gold.randomPos(viewport, blockList);
+        diamond.randomPos(viewport, blockList);
+        obsidian.randomPos(viewport, blockList);
 
 
 
@@ -163,16 +175,25 @@ public class Main implements ApplicationListener {
                             case 1:
                                 gameUI.setIronCount(gameUI.getIronCount() + 1);
                                 break;
+                            case 2:
+                                gameUI.setGoldCount(gameUI.getGoldCount() + 1);
+                                break;
+                            case 3:
+                                gameUI.setDiamondCount(gameUI.getDiamondCount() + 1);
+                                break;
+                            case 4:
+                                gameUI.setObsidianCount(gameUI.getObsidianCount() + 1);
+                                break;
                         }
 
                         gameUI.updateLabels(pickaxe);
 
                         b.resetHealth(b);       // resets health
 
-                        b.randomPos(viewport, b);       // random pos
+                        b.randomPos(viewport, blockList);       // random pos
                     }
                 } else {
-                    // !! EDIT THIS !!
+                    // do nothing
                 }
             }
 

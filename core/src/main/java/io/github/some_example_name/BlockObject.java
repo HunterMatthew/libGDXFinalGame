@@ -3,7 +3,11 @@ package io.github.some_example_name;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import sun.jvm.hotspot.opto.Block;
+
+import java.util.ArrayList;
 
 public class BlockObject {
 
@@ -36,17 +40,51 @@ public class BlockObject {
                 this.maxHealth = 5;    // 3 clicks
                 this.health = maxHealth;
 
-                this.blockDir = "Minecraft-Stone-Block.jpg";
+                this.blockDir = "blockImages/Minecraft-Stone-Block.jpg";
                 this.blockSprite = new Sprite(new Texture(blockDir));
                 this.blockSprite.setSize(128, 128);
                 break;
+
             case 1:     // iron
                 this.setTier(1);
 
                 this.maxHealth = 10;    // 5 clicks
                 this.health = maxHealth;
 
-                this.blockDir = "iron ore block.png";
+                this.blockDir = "blockImages/iron ore block.png";
+                this.blockSprite = new Sprite(new Texture(blockDir));
+                this.blockSprite.setSize(128, 128);
+                break;
+
+            case 2:     // gold
+                this.setTier(2);
+
+                this.maxHealth = 20;
+                this.health = maxHealth;
+
+                this.blockDir = "blockImages/Minecraft-Gold-Ore.jpg";
+                this.blockSprite = new Sprite(new Texture(blockDir));
+                this.blockSprite.setSize(128, 128);
+                break;
+
+            case 3:
+                this.setTier(3);
+
+                this.maxHealth = 30;
+                this.health = maxHealth;
+
+                this.blockDir = "blockImages/diamond ore.png";
+                this.blockSprite = new Sprite(new Texture(blockDir));
+                this.blockSprite.setSize(128, 128);
+                break;
+
+            case 4:
+                this.setTier(4);
+
+                this.maxHealth = 60;
+                this.health = maxHealth;
+
+                this.blockDir = "blockImages/Minecraft-Obsidian-Block.jpg";
                 this.blockSprite = new Sprite(new Texture(blockDir));
                 this.blockSprite.setSize(128, 128);
                 break;
@@ -55,12 +93,44 @@ public class BlockObject {
     }
 
 
-    public void randomPos(Viewport viewport, BlockObject b)
+    public void randomPos(Viewport viewport, ArrayList<BlockObject> blockList)
     {
         float maxX = viewport.getWorldWidth() - 138;    // 128 for image, extra 10 for grass on top of background
         float maxY = viewport.getWorldHeight() - 128;   // doesn't need extra 10, no grass
 
-        b.getBlockSprite().setPosition(MathUtils.random(maxX), MathUtils.random(maxY));  // sets pos
+        //getBlockSprite().setPosition(MathUtils.random(maxX), MathUtils.random(maxY));  // sets pos
+
+        while (true)
+        {
+            float x = MathUtils.random(maxX);
+            float y = MathUtils.random(maxY);
+
+            getBlockSprite().setPosition(x, y);
+
+            Rectangle blockRectangle = getBlockSprite().getBoundingRectangle();
+            boolean overlaps = false;        // for checking for overlapping blocks
+
+            for (BlockObject block : blockList) {       // != this: excludes itself from list
+                // .overlaps() libgdx, takes a rectangle argument
+                // if it overlaps with any blocks bounding rectangle
+                if (block != this && blockRectangle.overlaps(block.getBlockSprite().getBoundingRectangle())) {
+                    overlaps = true;
+                    break;
+                }
+
+            }
+                if (!overlaps) {
+                    break;
+                }
+
+        }
+
+
+
+
+
+
+
 
     }
 
