@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import jdk.internal.org.commonmark.node.Block;
 
 import java.util.ArrayList;
 
@@ -29,13 +30,18 @@ public class Main implements ApplicationListener {
 
     private GameUI gameUI;
 
+    /*      --CHANGING LOGIC--
     private BlockObject stone;
     private BlockObject iron;
     private BlockObject gold;
     private BlockObject diamond;
     private BlockObject obsidian;
+     */
+
+    private BlockObject block1, block2, block3, block4, block5;     // max 5?
 
     private Pickaxe pickaxe;
+
 
     private ArrayList<BlockObject> blockList;
 
@@ -51,18 +57,23 @@ public class Main implements ApplicationListener {
         spriteBatch = new SpriteBatch();
 
         pickaxe = new Pickaxe();
+        blockList = new ArrayList<>();
 
-        gameUI = new GameUI(viewport, spriteBatch, pickaxe);
+        gameUI = new GameUI(viewport, spriteBatch, pickaxe, blockList);
+
 
         backgroundDir = "minecraftDirtBackground.jpg";
         //backgroundTexture = new Texture(backgroundDir);
         backgroundSprite = new Sprite(new Texture(backgroundDir));
         backgroundSprite.setSize(1280,720);
 
-        blockList = new ArrayList<>();
+
+
+        /*
+                --CHANGING LOGIC--
 
         stone = new BlockObject();      // empty for tier 0 "stone"
-        iron = new BlockObject(1);      // 1 for tier iron
+        iron = new BlockObject(1);      // 1 for tier iron etc...
         gold = new BlockObject(2);
         diamond = new BlockObject(3);
         obsidian = new BlockObject(4);
@@ -75,16 +86,39 @@ public class Main implements ApplicationListener {
         blockList.add(obsidian);
 
 
+        blockList.add(stone);
+        blockList.add(iron);
+
+        */
+
+        block1 = new BlockObject(pickaxe.getMaximumBreakableTier());
+        block2 = new BlockObject(pickaxe.getMaximumBreakableTier());
+
+        blockList.add(block1);
+        blockList.add(block2);
+
+
+
+
+
         for (BlockObject b : blockList)
         {
             System.out.println(b.toString());
         }
+
+        /*
+                --CHANGING LOGIC--
 
         stone.randomPos(viewport, blockList);
         iron.randomPos(viewport, blockList);
         gold.randomPos(viewport, blockList);
         diamond.randomPos(viewport, blockList);
         obsidian.randomPos(viewport, blockList);
+
+         */
+
+        block1.randomPos(viewport, blockList);
+        block2.randomPos(viewport, blockList);
 
 
 
@@ -154,12 +188,11 @@ public class Main implements ApplicationListener {
 
             if (Gdx.input.justTouched())        // if clicked anywhere
             {
-
-
                 //System.out.println("pickaxe.getDmg() = " + p.getDmg());   debug
 
 
-                if (blockBounding.contains(touchPos))       // if clicked in bounds of any block
+                // if click contains bounds of block, and the block tier is less than or equal to the pick tier + 1
+                if (blockBounding.contains(touchPos) && (b.getTier() <= pickaxe.getTierInt() + 1))
                 {
                     b.setHealth(b.getHealth() - p.getDmg());     // -1 health
 
@@ -189,6 +222,7 @@ public class Main implements ApplicationListener {
                         gameUI.updateLabels(pickaxe);
 
                         b.resetHealth(b);       // resets health
+                        randomBlockResetter(b);
 
                         b.randomPos(viewport, blockList);       // random pos
                     }
@@ -204,8 +238,22 @@ public class Main implements ApplicationListener {
 
     }
 
+    public void randomBlockResetter(BlockObject b)
+    {
+        pickaxe.setMaximumBreakableTier();
+
+        b.tierSetter(MathUtils.random(pickaxe.getMaximumBreakableTier()), b);
+    }
+
     public Pickaxe getPickaxe() {
         return pickaxe;
     }
 
+    public ArrayList<BlockObject> getBlockList() {
+        return blockList;
+    }
+
+    public void setBlockList(ArrayList<BlockObject> blockList) {
+        this.blockList = blockList;
+    }
 }

@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import sun.jvm.hotspot.opto.Block;
+import jdk.internal.org.commonmark.node.Block;
 
 import java.util.ArrayList;
 
@@ -20,7 +20,7 @@ public class BlockObject {
 
     private int tier;       // sets image and health
 
-    public BlockObject(int tier)
+    //public BlockObject(int tier)
     {
         tierSetter(tier, this);
     }
@@ -28,6 +28,11 @@ public class BlockObject {
     public BlockObject()
     {
         tierSetter(0, this);
+    }
+
+    public BlockObject(int maximumBreakableTier)        // generates random block u can break
+    {
+        tierSetter(MathUtils.random(maximumBreakableTier), this);
     }
 
 
@@ -125,14 +130,9 @@ public class BlockObject {
 
         }
 
-
-
-
-
-
-
-
     }
+
+
 
     public void resetHealth(BlockObject b)
     {

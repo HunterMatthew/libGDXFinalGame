@@ -2,13 +2,17 @@ package io.github.some_example_name;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import jdk.internal.org.commonmark.node.Block;
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 
 
 //      I absolutely hate making ui's
@@ -42,9 +46,10 @@ public class GameUI
 
     //private TextButton menuExitButton;
     private TextButton pickUpgrade;
+    private TextButton maxBlockCountUpgrade;
     private int pickUpgradeCost;
 
-    public GameUI(Viewport viewport, SpriteBatch spriteBatch, Pickaxe pickaxe)       // same as create()
+    public GameUI(Viewport viewport, SpriteBatch spriteBatch, Pickaxe pickaxe, ArrayList<BlockObject> blockList)       // same as create()
     {
         stage = new Stage(viewport, spriteBatch);
         skin = new Skin(Gdx.files.internal("uiskin.json"));     // libGdx default skin for ui
@@ -63,14 +68,15 @@ public class GameUI
 
 
         menuButton = new TextButton("Menu", skin);
-        //menuExitButton = new TextButton("X", skin);
+
         pickUpgrade = new TextButton(pickaxeUpgradeString(pickaxe), skin);
+        maxBlockCountUpgrade = new TextButton("Add new block spawn", skin);
 
 
-        //menuTable.add(menuExitButton).expandX().right().pad(10);    // expand x adds a column
 
         menuTable.top().left().padTop(100).padLeft(10);     // looks better, finicky
-        menuTable.add(pickUpgrade);
+        menuTable.add(pickUpgrade).left().row();
+        menuTable.add(maxBlockCountUpgrade).left().row();
 
 
         stage.addActor(menuTable);
@@ -78,9 +84,9 @@ public class GameUI
 
         cobblestoneLabel = new Label("Cobblestone : " + getStoneCount(), skin);    // text label,
         ironLabel = new Label("Iron : " + getIronCount(), skin);                   // takes in string and skin
-        goldLabel = new Label("Gold: " + getGoldCount(), skin);
-        diamondLabel = new Label("Diamond: " + getDiamondCount(), skin);
-        obsidianLabel = new Label("Obsidian: " + getObsidianCount(), skin);
+        goldLabel = new Label("Gold : " + getGoldCount(), skin);
+        diamondLabel = new Label("Diamond : " + getDiamondCount(), skin);
+        obsidianLabel = new Label("Obsidian : " + getObsidianCount(), skin);
 
         pickTierLabel = new Label("Pickaxe Tier : " + pickaxe.getTierString(pickaxe.getTierInt()), skin);
 
@@ -165,8 +171,35 @@ public class GameUI
 
 
                 pickUpgrade.setChecked(false);
+            }
+
+        });
+
+        maxBlockCountUpgrade.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                try
+                {
+                    //System.out.println("CLICKED!!!");     debug
+
+                    //      -- ADD RESOURCE REQUIREMENT --
+
+                    BlockObject outputBlock = new BlockObject(MathUtils.random(pickaxe.getMaximumBreakableTier()));
+                    outputBlock.randomPos(viewport, blockList);
+
+                    if (blockList.size() <= 5) {
+                        blockList.add(outputBlock);
+                    } else {
+                        maxBlockCountUpgrade.setText("MAXIMUM UPGRADES");
+                    }
 
 
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
             }
 
         });

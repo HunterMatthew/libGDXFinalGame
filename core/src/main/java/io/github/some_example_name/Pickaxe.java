@@ -5,6 +5,8 @@ public class Pickaxe {
     private int tier;
     private int dmg;
 
+    private int maximumBreakableTier;
+
 
     public Pickaxe()
     {
@@ -94,6 +96,15 @@ public class Pickaxe {
 
     public void setTier(int tier) {
         this.tier = tier;
+    }
+
+    public int getMaximumBreakableTier() {
+        return maximumBreakableTier;
+    }
+
+    public void setMaximumBreakableTier()       // custom
+    {
+        this.maximumBreakableTier = getTierInt() + 1;
     }
 
 }
